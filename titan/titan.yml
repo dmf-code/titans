@@ -1,0 +1,25 @@
+development:
+  debug: True
+  headless: False
+  browser_args: [
+    '--no-sandbox',
+    '--disable-gpu',
+    '--ignore-certificate-errors',
+    '--ignore-ssl-errors',
+    '--window-size=1980,1000',
+  ]
+  experimental_option: {
+    prefs: {
+
+    },
+    excludeSwitches: ['enable-automation']
+  }
+
+production:
+  debug: False
+  headless: True
+  browser_args: [
+    '--no-sandbox',
+    '--disable-gpu',
+  ]
+  hub: [http://127.0.0.1, http://127.0.0.1]

@@ -1,0 +1,15 @@
+[
+  {
+    "component": "request",
+    "args": {
+      "url": "https://www.zhipin.com/c101280100/?query=PHP"
+    },
+    "type": "browser"
+  },
+  {
+    "component": "sleep",
+    "args": {
+      "time": 5
+    }
+  }
+]

@@ -102,3 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# titans
+node_modules/
+logs/
+.idea/
