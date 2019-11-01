@@ -11,7 +11,7 @@
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <json-editor ref="jsonEditor" v-model="jsonText" />
+        <json-editor ref="jsonEditor" :json="form.jsonText" :options="options" />
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -40,6 +40,14 @@ export default {
     },
     cType: {
       default: "add"
+    },
+    editData: {
+      default: null
+    }
+  },
+  watch: {
+    editData: function() {
+      this.form = this.editData;
     }
   },
   data() {
@@ -47,10 +55,13 @@ export default {
       dialogFormVisible: false,
       form: {
         name: "",
-        type: ""
+        type: "",
+        jsonText: ""
       },
       formLabelWidth: "120px",
-      jsonText: ""
+      options: {
+        mode: "code"
+      }
     };
   },
   methods: {
@@ -68,6 +79,9 @@ export default {
     },
     update() {
       console.log("update");
+    },
+    jsonText() {
+      return this.form.jsonText;
     }
   }
 };

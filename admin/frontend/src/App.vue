@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div id="jsoneditor"></div>
     <el-container>
       <el-header>爬虫规则列表</el-header>
       <el-main>

@@ -14,6 +14,7 @@
           cSize="mini"
           cName="编辑"
           @click.native="handleEdit(scope.$index, scope.row)"
+          :editData="form"
         ></dialog-form>
       </template>
     </el-table-column>
@@ -28,7 +29,8 @@ export default {
   data() {
     return {
       headData: [],
-      bodyData: []
+      bodyData: [],
+      form: {}
     };
   },
   mounted() {
@@ -57,8 +59,9 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
+      console.log("handleEdit");
       console.log(row);
-      this.form = Object.assign({}, row);
+      this.form = row;
     },
     handleDelete(index, row) {
       console.log(index, row);
