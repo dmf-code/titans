@@ -67,7 +67,10 @@ export default {
       },
       rules: {
         type: [{ required: true, message: "请输入任务类型", trigger: "blur" }],
-        name: [{ required: true, message: "请输入任务名称", trigger: "blur" }]
+        name: [{ required: true, message: "请输入任务名称", trigger: "blur" }],
+        jsonText: [
+          { required: true, message: "请输入任务规则", trigger: "change" }
+        ]
       }
     };
   },
@@ -78,7 +81,7 @@ export default {
         .post("/api/tasks/", {
           type: this.form.type,
           name: this.form.name,
-          jsonText: this.jsonText
+          jsonText: this.form.jsonText
         })
         .then(response => {
           console.log(response.data);

@@ -24,14 +24,20 @@ class TasksApi(MethodView):
     def post(self):
         # 创建一个新用户
         print(request.json)
-        db.session.add(Task(type=request.json['type'], name=request.json['name'], json_text=request.json['jsonText']))
+        json_text = request.json['jsonText']
+        if isinstance(json_text, dict):
+            json_text = json.dumps(json_text)
+        db.session.add(Task(type=request.json['type'], name=request.json['name'], json_text=json_text))
         db.session.commit()
 
         return {'status': 'success'}
 
     def delete(self, task_id):
         # 删除一个用户
-        pass
+        task = Task.query.filter_by(id=task_id).first()
+        db.session.delete(task)
+        db.session.commit()
+        return {'status': 'success'}
 
     def put(self, task_id):
         # update a single user
