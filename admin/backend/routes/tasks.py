@@ -4,6 +4,7 @@ from flask import request
 from admin.backend.models.base import db
 from admin.backend.models.task import Task
 from admin.backend.utils import json_response
+import json
 
 
 class TasksApi(MethodView):
@@ -34,4 +35,11 @@ class TasksApi(MethodView):
 
     def put(self, task_id):
         # update a single user
-        pass
+        print(task_id)
+        task = Task.query.filter_by(id=task_id).first()
+        task.type = request.json['type']
+        task.name = request.json['name']
+        task.json_text = json.dumps(request.json['jsonText'])
+        print(request.json)
+        db.session.commit()
+        return {'status': 'success'}

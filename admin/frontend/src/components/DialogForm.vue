@@ -11,7 +11,7 @@
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <json-editor ref="jsonEditor" :json="form.jsonText" :options="options" />
+        <json-editor :json="form.jsonText" :onChange="onChange" :options="options" />
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -28,6 +28,7 @@
 
 <script>
 import JsonEditor from "@/components/JsonEditor";
+var ace = require("brace");
 export default {
   name: "DialogForm",
   components: { JsonEditor },
@@ -60,7 +61,8 @@ export default {
       },
       formLabelWidth: "120px",
       options: {
-        mode: "code"
+        mode: "code",
+        ace: ace
       }
     };
   },
@@ -78,10 +80,13 @@ export default {
         });
     },
     update() {
-      console.log("update");
+      this.dialogFormVisible = false;
+      this.axios.put("/api/tasks/" + this.form.id, this.form).then(response => {
+        console.log(response.data);
+      });
     },
-    jsonText() {
-      return this.form.jsonText;
+    onChange(newJson) {
+      this.form.jsonText = newJson;
     }
   }
 };
