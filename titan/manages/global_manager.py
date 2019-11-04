@@ -60,7 +60,7 @@ class GlobalManager(metaclass=Singleton):
         data[key] = value
 
     def get(self, keys=None, type_='_storage'):
-        value = getattr(self, type_, None)
+        value = getattr(self, type_, {})
 
         if keys is None:
             return value

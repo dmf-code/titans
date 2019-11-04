@@ -42,12 +42,11 @@ class Config(object):
 
 
 # load config
-with open(TITAN_DIR + os.path.sep + 'titan.yml') as f:
+with open(TITAN_DIR + os.path.sep + 'titan.yml', encoding='utf-8') as f:
     YAML_CONFIG = yaml.load(f.read(), Loader=yaml.FullLoader)[TITAN_ENV]
 
 if not os.path.exists(LOGS_DIR):
     os.mkdir(LOGS_DIR)
-
 
 if __name__ == '__main__':
     print(YAML_CONFIG)

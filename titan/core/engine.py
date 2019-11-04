@@ -3,8 +3,9 @@ from titan.manages.factory_manager import FactoryManager
 from titan.manages.global_manager import GlobalManager
 from titan.manages.hook_manager import HookManager
 from titan.core.browser import Chrome
+from titan.utils import make_requests
+from titan import YAML_CONFIG
 import re
-import os
 
 
 class Engine(object):
@@ -22,6 +23,7 @@ class Engine(object):
         try:
             print(self.commands)
             self.execute(self.commands, 0)
+            self.handle_data()
         except Exception as e:
             self.hook.exception(e)
         finally:
@@ -29,8 +31,10 @@ class Engine(object):
 
     def execute(self, commands, depth):
         for command in commands:
+            print(isinstance(commands, str))
             if isinstance(command, list):
                 return self.execute(command, depth + 1)
+            print('exec command: ', command)
             component_name = command['component'].lower()
             component_args = command.get('args', {})
 
@@ -61,7 +65,15 @@ class Engine(object):
             if GlobalManager().loop_flag:
                 self.execute(command, depth + 1)
 
-            print(os.linesep)
+    @staticmethod
+    def handle_data():
+        data = GlobalManager().get()
+        res = make_requests('POST', YAML_CONFIG['backend_callback_url'], json=data)
+        print(res)
+        if res['code'] == 0:
+            print('success')
+        else:
+            print('failed')
 
     @staticmethod
     def result_filter(component_args, text):
