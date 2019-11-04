@@ -14,6 +14,7 @@ development:
     },
     excludeSwitches: ['enable-automation']
   }
+  backend_callback_url: 'http://127.0.0.1:5000/api/callback'
 
 production:
   debug: False

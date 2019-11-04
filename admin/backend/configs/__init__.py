@@ -7,7 +7,8 @@ class Config(object):
     DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_POOL_RECYCLE = 1800
-    SQLALCHEMY_POOL_SIZE = 20
+    SQLALCHEMY_POOL_TIMEOUT = 1900
+    SQLALCHEMY_POOL_SIZE = 5
 
 
 class ProductionConfig(Config):

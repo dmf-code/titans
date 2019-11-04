@@ -39,5 +39,7 @@ class Common(Base):
         # with open(dirs['configs'] + 'common.json', 'r', encoding='utf-8') as f:
         #     commands = json.load(f)
         res = make_requests('GET', 'http://localhost:5000/api/search/common/boss')
-        commands = json.dumps(res['jsonText'])
+        commands = res['data']['jsonText']
+        if isinstance(commands, str):
+            commands = json.loads(commands)
         return commands

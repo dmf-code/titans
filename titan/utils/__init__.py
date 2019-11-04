@@ -15,17 +15,16 @@ def convert_big_hump(string, space_character='_'):
 
 
 def make_requests(method, url, **kwargs):
+    closure = None
     if kwargs.get('closure', None):
         closure = kwargs.pop('closure')
     result = requests.request(method, url, **kwargs, timeout=60)
     if 200 <= result.status_code < 300:
+        if isfunction(closure):
+            closure(result)
         if result.headers.get('Content-Type', None) == 'application/json':
             res = json.loads(result.text)
-            if isfunction(closure):
-                closure(result)
             return res
         return result.text
     content = 'method: {}, url: {}, args: {}{}'.format(method, url, kwargs, os.linesep)
     raise requests.HTTPError(content + result.reason)
-
-
