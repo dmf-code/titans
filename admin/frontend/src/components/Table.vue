@@ -14,6 +14,7 @@
           cSize="mini"
           cName="编辑"
           @click.native="handleEdit(scope.$index, scope.row)"
+          :editData="form"
         ></dialog-form>
       </template>
     </el-table-column>
@@ -28,7 +29,8 @@ export default {
   data() {
     return {
       headData: [],
-      bodyData: []
+      bodyData: [],
+      form: {}
     };
   },
   mounted() {
@@ -57,11 +59,40 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
+      console.log("handleEdit");
       console.log(row);
-      this.form = Object.assign({}, row);
+      this.form = row;
     },
     handleDelete(index, row) {
       console.log(index, row);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      })
+        .then(() => {
+          this.axios.delete("/api/tasks/" + row.id).then(response => {
+            if (response.data.get("status") == true) {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              location.reload();
+            } else {
+              this.$message({
+                type: "info",
+                message: "已取消删除"
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };

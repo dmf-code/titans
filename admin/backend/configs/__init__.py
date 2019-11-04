@@ -6,6 +6,8 @@ class Config(object):
     TESTING = False
     DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_POOL_RECYCLE = 1800
+    SQLALCHEMY_POOL_SIZE = 20
 
 
 class ProductionConfig(Config):
@@ -14,4 +16,5 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_ECHO = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@192.168.3.9:9003/titans?charset=utf8mb4'

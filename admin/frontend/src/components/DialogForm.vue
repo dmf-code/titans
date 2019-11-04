@@ -3,15 +3,16 @@
     <el-button :size="cSize" type="primary" @click="dialogFormVisible = true">{{ cName }}</el-button>
 
     <el-dialog title="爬取规则" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="任务类型" :label-width="formLabelWidth">
+      <el-form :model="form" :rules="rules">
+        <el-form-item label="任务类型" :label-width="formLabelWidth" prop="type">
           <el-input v-model="form.type" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="任务名称" :label-width="formLabelWidth">
+        <el-form-item label="任务名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-
-        <json-editor ref="jsonEditor" v-model="jsonText" />
+        <el-form-item label="任务逻辑" :label-width="formLabelWidth" prop="jsonText">
+          <json-editor :json="form.jsonText" :onChange="onChange" :options="options" />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -28,6 +29,7 @@
 
 <script>
 import JsonEditor from "@/components/JsonEditor";
+var ace = require("brace");
 export default {
   name: "DialogForm",
   components: { JsonEditor },
@@ -40,6 +42,14 @@ export default {
     },
     cType: {
       default: "add"
+    },
+    editData: {
+      default: null
+    }
+  },
+  watch: {
+    editData: function() {
+      this.form = this.editData;
     }
   },
   data() {
@@ -47,10 +57,21 @@ export default {
       dialogFormVisible: false,
       form: {
         name: "",
-        type: ""
+        type: "",
+        jsonText: {}
       },
       formLabelWidth: "120px",
-      jsonText: ""
+      options: {
+        mode: "code",
+        ace: ace
+      },
+      rules: {
+        type: [{ required: true, message: "请输入任务类型", trigger: "blur" }],
+        name: [{ required: true, message: "请输入任务名称", trigger: "blur" }],
+        jsonText: [
+          { required: true, message: "请输入任务规则", trigger: "change" }
+        ]
+      }
     };
   },
   methods: {
@@ -60,14 +81,22 @@ export default {
         .post("/api/tasks/", {
           type: this.form.type,
           name: this.form.name,
-          jsonText: this.jsonText
+          jsonText: this.form.jsonText
         })
         .then(response => {
           console.log(response.data);
         });
+      location.reload();
     },
     update() {
-      console.log("update");
+      this.dialogFormVisible = false;
+      this.axios.put("/api/tasks/" + this.form.id, this.form).then(response => {
+        console.log(response.data);
+      });
+      location.reload();
+    },
+    onChange(newJson) {
+      this.form.jsonText = newJson;
     }
   }
 };

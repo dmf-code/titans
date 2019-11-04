@@ -4,6 +4,8 @@ from flask import request
 from admin.backend.models.base import db
 from admin.backend.models.task import Task
 from admin.backend.utils import json_response
+import json
+from admin.backend.bule_print import api
 
 
 class TasksApi(MethodView):
@@ -17,21 +19,34 @@ class TasksApi(MethodView):
                 res.append(task.to_json())
             return json_response(res)
         else:
-            # 显示一个用户
-            pass
+            task = Task.query.filter_by(id=task_id).first()
+            return json_response(task.to_json())
 
     def post(self):
         # 创建一个新用户
         print(request.json)
-        db.session.add(Task(type=request.json['type'], name=request.json['name'], json_text=request.json['jsonText']))
+        json_text = request.json['jsonText']
+        if not isinstance(json_text, str):
+            json_text = json.dumps(json_text)
+        db.session.add(Task(type=request.json['type'], name=request.json['name'], json_text=json_text))
         db.session.commit()
 
-        return {'status': 'success'}
+        return json_response()
 
     def delete(self, task_id):
         # 删除一个用户
-        pass
+        task = Task.query.filter_by(id=task_id).first()
+        db.session.delete(task)
+        db.session.commit()
+        return json_response()
 
     def put(self, task_id):
         # update a single user
-        pass
+        print(task_id)
+        task = Task.query.filter_by(id=task_id).first()
+        task.type = request.json['type']
+        task.name = request.json['name']
+        task.json_text = json.dumps(request.json['jsonText'])
+        print(request.json)
+        db.session.commit()
+        return json_response()

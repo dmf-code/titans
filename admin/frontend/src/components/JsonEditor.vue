@@ -1,74 +1,71 @@
- 
- <!--codemirror-json格式化-->
 <template>
-  <div class="json-editor">
-    <textarea ref="textarea" />
-  </div>
+  <div ref="jsoneditor"></div>
 </template>
- 
-<script>
-import CodeMirror from "codemirror";
-import "codemirror/addon/lint/lint.css";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/rubyblue.css";
-// require('script-loader!jsonlint')
-import "codemirror/mode/javascript/javascript";
-// import 'codemirror/addon/lint/lint'
-import "codemirror/addon/lint/json-lint";
 
+<script>
+import JSONEditor from "jsoneditor/dist/jsoneditor-minimalist.js";
+import "jsoneditor/dist/jsoneditor.min.css";
+import _ from "lodash";
 export default {
-  name: "JsonEditor",
-  /* eslint-disable vue/require-prop-types */
-  props: ["value"],
+  name: "json-editor",
   data() {
     return {
-      jsonEditor: false
+      editor: null
     };
   },
+  props: {
+    json: {
+      required: true
+    },
+    options: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
+    onChange: {
+      type: Function
+    }
+  },
   watch: {
-    value(value) {
-      const editor_value = this.jsonEditor.getValue();
-      if (value !== editor_value) {
-        this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
+    json: {
+      handler(newJson) {
+        if (this.editor) {
+          if (typeof newJson == "string") {
+            newJson = JSON.parse(newJson);
+          }
+          this.editor.set(newJson);
+        }
+      },
+      deep: true
+    }
+  },
+  methods: {
+    _onChange(e) {
+      if (this.onChange && this.editor) {
+        this.onChange(this.editor.get());
       }
     }
   },
   mounted() {
-    this.jsonEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
-      lineNumbers: true,
-      mode: "application/json",
-      gutters: ["CodeMirror-lint-markers"],
-      theme: "rubyblue",
-      lint: true
-    });
-
-    this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
-    this.jsonEditor.on("change", cm => {
-      this.$emit("changed", cm.getValue());
-      this.$emit("input", cm.getValue());
-    });
+    const container = this.$refs.jsoneditor;
+    const options = _.extend(
+      {
+        onChange: this._onChange
+      },
+      this.options
+    );
+    this.editor = new JSONEditor(container, options);
+    this.editor.set(this.json);
   },
-  methods: {
-    getValue() {
-      return this.jsonEditor.getValue();
+  beforeDestroy() {
+    if (this.editor) {
+      this.editor.destroy();
+      this.editor = null;
     }
   }
 };
 </script>
- 
-<style scoped>
-.json-editor {
-  height: 100%;
-  position: relative;
-}
-.json-editor >>> .CodeMirror {
-  height: auto;
-  min-height: 180px;
-}
-.json-editor >>> .CodeMirror-scroll {
-  min-height: 180px;
-}
-.json-editor >>> .cm-s-rubyblue span.cm-string {
-  color: #f08047;
-}
+
+<style>
 </style>
