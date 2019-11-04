@@ -86,12 +86,14 @@ export default {
         .then(response => {
           console.log(response.data);
         });
+      location.reload();
     },
     update() {
       this.dialogFormVisible = false;
       this.axios.put("/api/tasks/" + this.form.id, this.form).then(response => {
         console.log(response.data);
       });
+      location.reload();
     },
     onChange(newJson) {
       this.form.jsonText = newJson;

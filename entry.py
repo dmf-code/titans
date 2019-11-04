@@ -15,8 +15,8 @@ class Entry(object):
         pass
 
     def build_parser(self):
-        self.parser.add_argument('--spider_type', dest='spider_type', required=True, help='spider type')
-        self.parser.add_argument('--task_name', dest='task_name', required=True, help='task name')
+        self.parser.add_argument('--type', dest='spider_type', required=True, help='spider type')
+        self.parser.add_argument('--name', dest='task_name', required=True, help='task name')
         return self.parser.parse_args()
 
     def set(self, key, value):

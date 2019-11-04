@@ -78,6 +78,7 @@ export default {
                 type: "success",
                 message: "删除成功!"
               });
+              location.reload();
             } else {
               this.$message({
                 type: "info",

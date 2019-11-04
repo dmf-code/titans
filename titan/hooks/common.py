@@ -4,6 +4,8 @@ from titan.utils.log import logger
 from titan.hooks.base import Base
 from titan import YAML_CONFIG
 import traceback
+from titan.utils import make_requests
+import json
 
 
 class Common(Base):
@@ -32,8 +34,10 @@ class Common(Base):
         return None
 
     def load_commands(self, *args, **kwargs):
-        from titan import dirs
-        import json
-        with open(dirs['configs'] + 'common.json', 'r', encoding='utf-8') as f:
-            commands = json.load(f)
+        # from titan import dirs
+        # import json
+        # with open(dirs['configs'] + 'common.json', 'r', encoding='utf-8') as f:
+        #     commands = json.load(f)
+        res = make_requests('GET', 'http://localhost:5000/api/search/common/boss')
+        commands = json.dumps(res['jsonText'])
         return commands
