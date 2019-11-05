@@ -78,7 +78,7 @@ export default {
     add() {
       this.dialogFormVisible = false;
       this.axios
-        .post("/api/tasks/", {
+        .post("/api/configs/", {
           type: this.form.type,
           name: this.form.name,
           jsonText: this.form.jsonText
@@ -90,9 +90,11 @@ export default {
     },
     update() {
       this.dialogFormVisible = false;
-      this.axios.put("/api/tasks/" + this.form.id, this.form).then(response => {
-        console.log(response.data);
-      });
+      this.axios
+        .put("/api/configs/" + this.form.id, this.form)
+        .then(response => {
+          console.log(response.data);
+        });
       location.reload();
     },
     onChange(newJson) {

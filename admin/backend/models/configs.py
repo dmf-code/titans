@@ -2,7 +2,7 @@
 from .base import db
 
 
-class Task(db.Model):
+class Configs(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     type = db.Column(db.String(20), nullable=False)
     name = db.Column(db.String(20), nullable=False)

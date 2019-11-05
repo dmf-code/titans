@@ -49,7 +49,7 @@ export default {
       }
     ];
     this.axios
-      .get("/api/tasks/")
+      .get("/api/configs/")
       .then(response => {
         this.bodyData = response.data["data"];
       })
@@ -72,7 +72,7 @@ export default {
         center: true
       })
         .then(() => {
-          this.axios.delete("/api/tasks/" + row.id).then(response => {
+          this.axios.delete("/api/configs/" + row.id).then(response => {
             if (response.data.get("status") == true) {
               this.$message({
                 type: "success",
