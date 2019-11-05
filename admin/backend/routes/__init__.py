@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .tasks import TasksApi
+from .configs import ConfigsApi
 
 
 def register_api(app, view, endpoint, url, pk='id', pk_type='int'):
@@ -12,4 +12,4 @@ def register_api(app, view, endpoint, url, pk='id', pk_type='int'):
 
 
 def init(app):
-    register_api(app, TasksApi, 'tasks_api', '/tasks/', pk='task_id')
+    register_api(app, ConfigsApi, 'configs_api', '/configs/', pk='config_id')
