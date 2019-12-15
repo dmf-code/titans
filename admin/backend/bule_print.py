@@ -15,4 +15,5 @@ def search(type_, name):
 
 @api.route('/callback', methods=['POST'])
 def callback():
+    print(request.json)
     return json_response()

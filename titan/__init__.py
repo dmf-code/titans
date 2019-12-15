@@ -19,6 +19,8 @@ HOOKS_DIR = TITAN_DIR + os.path.sep + 'hooks' + os.path.sep
 
 STORAGES_DIR = TITAN_DIR + os.path.sep + 'storages' + os.path.sep
 
+COOKIES_DIR = STORAGES_DIR + os.path.sep + 'cookies' + os.path.sep
+
 dirs = {
     'titan': TITAN_DIR,
     'bin': BIN_DIR,
@@ -26,7 +28,8 @@ dirs = {
     'logs': LOGS_DIR,
     'components': COMPONENTS_DIR,
     'configs': CONFIGS_DIR,
-    'hooks': HOOKS_DIR
+    'hooks': HOOKS_DIR,
+    'cookies': COOKIES_DIR
 }
 
 

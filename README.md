@@ -37,9 +37,46 @@ CREATE TABLE `tasks` (
 
 `Selenium` 自动化框架，采用 `json` 配置化的形式进行数据采集或自动化测试等
 
+#### 架构
+
+```markdown
++---abstracts // 抽象类
++---bin // 二进制文件
++---components // 组件
++---configs // 配置文件
++---core // 核心逻辑
++---hooks // 钩子
++---logs // 日志
++---manages // 全局管理类
++---storages // 存储保存位置
+|   \---cookies
++---utils // 通用工具
+
+```
 
 ### chromedirver下载（对应相应的版本）
 
 https://npm.taobao.org/mirrors/chromedriver
+
+
+### 配置使用
+
+```json
+[
+  {
+    "args": {
+      "url": "https://www.zhipin.com/c101280100/?query=PHP"
+    },
+    "type": "browser",
+    "component": "request"
+  },
+  {
+    "args": {
+      "time": 5
+    },
+    "component": "sleep"
+  }
+]
+```
 
 

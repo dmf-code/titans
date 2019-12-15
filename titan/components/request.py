@@ -2,7 +2,8 @@
 from titan.manages.global_manager import GlobalManager
 from titan.utils import make_requests
 from titan.components import Base
-import time
+from titan import dirs
+import os
 
 
 class Request(Base):
@@ -22,6 +23,8 @@ class Request(Base):
 
     def browser(self):
         url = self.url_format()
+        if self.params.get('read_cookie', None):
+            self.read_cookie()
         self.driver.get(url)
         return self.sleep()
 
@@ -29,3 +32,13 @@ class Request(Base):
         url = self.url_format()
         data = self.params.get('data', [])
         make_requests(self.get_method(), url, data=data)
+
+    def read_cookie(self):
+        path = dirs['cookies'] + self.params['cookie_name'] + '.txt'
+        if not os.path.exists(path):
+            raise Exception('cookies not exists')
+
+        with open(path) as f:
+            cookies = f.read()
+        for cookie in cookies:
+            self.driver.add_cookie(cookie)

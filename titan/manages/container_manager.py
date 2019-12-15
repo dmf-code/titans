@@ -6,7 +6,7 @@ import importlib
 import os
 
 
-class FactoryManager(metaclass=Singleton):
+class ContainerManager(metaclass=Singleton):
     __contains = {}
 
     def __init__(self):
@@ -30,6 +30,5 @@ class FactoryManager(metaclass=Singleton):
 
 
 if __name__ == '__main__':
-    factory = FactoryManager()
+    factory = ContainerManager()
     factory.build('click')
-
