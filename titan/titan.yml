@@ -24,7 +24,7 @@ development:
         name: 'test.txt'
       },
       request: {
-        url: 'http://127.0.0.1:5000/api/callback'
+        url: 'http://127.0.0.1:5000/tasks/'
       }
     }
   }

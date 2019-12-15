@@ -17,6 +17,9 @@ class Common(Base):
     def running(self, *args, **kwargs):
         pass
 
+    def handle_data(self, *args, **kwargs):
+        pass
+
     def after(self, *args, **kwargs):
         GlobalManager().get_driver().close()
         GlobalManager().get_driver().quit()

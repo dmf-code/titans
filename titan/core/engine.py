@@ -78,16 +78,20 @@ class Engine(object):
             if not GlobalManager().is_loop:
                 return
 
-    @staticmethod
-    def handle_data():
+    def handle_data(self):
         data = GlobalManager().get()
         storage_type = YAML_CONFIG['callback']['default']
         callback = YAML_CONFIG['callback']['stores']
         if storage_type == 'file':
-            with open(dirs['storages'] + callback['file']['name'], 'w') as f:
-                f.write(data)
+            self.hook.handle_data(data)
         elif storage_type == 'request':
-            res = make_requests('POST', callback['request']['url'], json=data)
+            task_json = {
+                'type': GlobalManager().get('spider_type', '_system'),
+                'name': GlobalManager().get('task_name', '_system'),
+                'uuid': GlobalManager().get('uuid', '_system'),
+                'result': data
+            }
+            res = make_requests('POST', callback['request']['url'], json=task_json)
             print(res)
             if res['code'] == 0:
                 print('success')
