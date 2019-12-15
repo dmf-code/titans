@@ -1,13 +1,13 @@
 # titans
 Selenium automation framework - Selenium自动化框架
 
-![](https://github.com/dmf-code/photos/blob/master/titans.jpg)
+![](./docs/titans.png)
 
 ### 前端
 
 采用Element-UI进行前端布局设计，前后分离的模式
 
-![](https://github.com/dmf-code/photos/blob/master/%E5%89%8D%E6%9C%9F%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80.png)
+![](./docs/front.png)
 
 ### 后端
 
@@ -39,6 +39,9 @@ CREATE TABLE `tasks` (
 
 #### 架构
 
+
+目录结构
+
 ```markdown
 +---abstracts // 抽象类
 +---bin // 二进制文件
@@ -53,6 +56,24 @@ CREATE TABLE `tasks` (
 +---utils // 通用工具
 
 ```
+
+组件
+```markdown
+│  click.py     点击操作类
+│  content.py   html标签内容获取类
+│  cookie.py    cookie操作类
+│  for.py       for循环流程类
+│  if.py        if流程类
+│  iframe.py    iframe操作类
+│  input.py     输入操作类
+│  judge.py     条件判断类
+│  request.py   请求类
+│  sleep.py     睡眠延时类
+│  wait.py      等待事件类
+│  while.py     while循环类
+│  window.py    window标签页切换类
+```
+
 
 ### chromedirver下载（对应相应的版本）
 
@@ -79,4 +100,15 @@ https://npm.taobao.org/mirrors/chromedriver
 ]
 ```
 
+
+### 优势
+
+采用json配置化的方式进行浏览器自动化，现在已有10+组件强力驱动，可以应对绝大多数的自动化操作。这个
+框架最大特点就是编写json就可以实现像写代码一样进行流程控制，为采集网站结构变动提供无需重启服务的
+便利
+
+
+### QQ交流群
+
+`742398812`
 
