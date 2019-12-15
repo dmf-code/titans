@@ -1,13 +1,13 @@
 # titans
 Selenium automation framework - Selenium自动化框架
 
-![](./docs/titans.png)
+![](./docs/imgs/titans.png)
 
 ### 前端
 
 采用Element-UI进行前端布局设计，前后分离的模式
 
-![](./docs/front.png)
+![](./docs/imgs/front.png)
 
 ### 后端
 
