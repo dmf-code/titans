@@ -6,10 +6,74 @@
     },
     "type": "browser"
   },
-  {
-    "component": "sleep",
-    "args": {
-      "time": 5
+  [
+    {
+      "component": "for",
+      "args": {
+        "xpath": "//div[@class='job-list']//ul//li"
+      },
+      "type": "start"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//div[@class='job-title']",
+        "is_text": true,
+        "key": "language"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//span[@class='red']",
+        "is_text": true,
+        "key": "salary_range"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']/h3/following-sibling::p",
+        "is_text": true,
+        "key": "address_workAge_education"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-company']//a",
+        "is_text": true,
+        "key": "company"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-company']//p",
+        "is_text": true,
+        "key": "tmt"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-publis']/h3",
+        "is_text": true,
+        "key": "hr_name_position"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "key": "job_list_custom_array"
+      },
+      "type": "end"
     }
-  }
+  ]
 ]

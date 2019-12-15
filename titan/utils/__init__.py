@@ -3,6 +3,7 @@ from inspect import isfunction
 import requests
 import json
 import os
+import re
 
 
 def convert_big_hump(string, space_character='_'):
@@ -28,3 +29,17 @@ def make_requests(method, url, **kwargs):
         return result.text
     content = 'method: {}, url: {}, args: {}{}'.format(method, url, kwargs, os.linesep)
     raise requests.HTTPError(content + result.reason)
+
+
+def screening_value(element, params, text=''):
+    if params.get('is_text', None):
+        text = element.text
+        print(element.text)
+
+    if params.get('attr', None):
+        text = element.get_attribute(params['attr'])
+
+    if params.get('pattern', None):
+        text = re.match(params['pattern'], text).group(1)
+
+    return text

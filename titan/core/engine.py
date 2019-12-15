@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from titan.manages.factory_manager import FactoryManager
+from titan.manages.container_manager import ContainerManager
 from titan.manages.global_manager import GlobalManager
 from titan.manages.hook_manager import HookManager
 from titan.core.browser import Chrome
 from titan.utils import make_requests
-from titan import YAML_CONFIG
+from titan import YAML_CONFIG, dirs
 import re
 
 
@@ -30,50 +30,73 @@ class Engine(object):
             self.hook.after()
 
     def execute(self, commands, depth):
+        GlobalManager().if_turn_on()
+        GlobalManager().depth = depth
         for command in commands:
-            print(isinstance(commands, str))
+
             if isinstance(command, list):
-                return self.execute(command, depth + 1)
+                self.execute(command, depth + 1)
+                GlobalManager().if_turn_on()
+
+                while GlobalManager().is_loop:
+                    self.execute(command, depth + 1)
+                    GlobalManager().if_turn_on()
+
+                GlobalManager().depth = depth
+                continue
+            print('#--------------------------------------#')
             print('exec command: ', command)
             component_name = command['component'].lower()
             component_args = command.get('args', {})
 
-            print('if_status: ', GlobalManager().if_flag)
-            print('break_status: ', GlobalManager().break_flag)
-            if GlobalManager().break_flag:
-                break
-
-            if component_name != 'if' and GlobalManager().if_flag:
-                continue
+            print('before_if_status: ', GlobalManager().is_if)
+            print('before_break_status: ', GlobalManager().is_break)
+            print('before_loop_status: ', GlobalManager().is_loop)
 
             if command.get('db_args', None):
                 component_args['db_args'] = GlobalManager().get(component_args['dbArgs'], '_db_args')
 
-            component = FactoryManager().build(component_name, component_args)
+            component = ContainerManager().build(component_name, component_args)
 
             type_ = command.get('type', 'default')
-
-            print('command: ', command, depth)
 
             result = self.result_filter(component_args, component.run(type_))
 
             if command.get('return', None):
                 GlobalManager().set(command['return'], result)
 
-            print('loop_status: ', GlobalManager().loop_flag)
+            print('after_if_status: ', GlobalManager().is_if)
+            print('after_break_status: ', GlobalManager().is_break)
+            print('after_loop_status: ', GlobalManager().is_loop)
 
-            if GlobalManager().loop_flag:
-                self.execute(command, depth + 1)
+            if component_name == 'if' and not GlobalManager().is_if:
+                return
 
-    @staticmethod
-    def handle_data():
+            if GlobalManager().is_break:
+                return
+
+            if not GlobalManager().is_loop:
+                return
+
+    def handle_data(self):
         data = GlobalManager().get()
-        res = make_requests('POST', YAML_CONFIG['backend_callback_url'], json=data)
-        print(res)
-        if res['code'] == 0:
-            print('success')
-        else:
-            print('failed')
+        storage_type = YAML_CONFIG['callback']['default']
+        callback = YAML_CONFIG['callback']['stores']
+        if storage_type == 'file':
+            self.hook.handle_data(data)
+        elif storage_type == 'request':
+            task_json = {
+                'type': GlobalManager().get('spider_type', '_system'),
+                'name': GlobalManager().get('task_name', '_system'),
+                'uuid': GlobalManager().get('uuid', '_system'),
+                'result': data
+            }
+            res = make_requests('POST', callback['request']['url'], json=task_json)
+            print(res)
+            if res['code'] == 0:
+                print('success')
+            else:
+                print('failed')
 
     @staticmethod
     def result_filter(component_args, text):

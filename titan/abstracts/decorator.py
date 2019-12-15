@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 import timeit
 from functools import wraps
 
@@ -12,4 +11,6 @@ def run_time_sum(func):
         end = timeit.default_timer()
         print('run time: {} s'.format(str(round(end - start, 4))))
         return __func
+
     return wrapper
+

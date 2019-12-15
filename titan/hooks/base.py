@@ -13,6 +13,10 @@ class Base(metaclass=Singleton):
         pass
 
     @abstractmethod
+    def handle_data(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
     def after(self, *args, **kwargs):
         pass
 

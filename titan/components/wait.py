@@ -9,6 +9,5 @@ class Wait(Base):
 
     def have_element(self):
         WebDriverWait(self.driver, self.params.get('time', 10)).until(
-            EC.presence_of_element_located(By.XPATH, self.params.get('xpath'))
+            EC.presence_of_element_located(By.XPATH, self.params['xpath'])
         )
-
