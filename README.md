@@ -82,23 +82,101 @@ https://npm.taobao.org/mirrors/chromedriver
 
 ### 配置使用
 
+配置中使用`{}`作为一个组件的调用，`[]`作为一个作用域来使用。
+`{}`有三个基本参数：
+1. `args`配置参数
+
+2. `type`组件使用具体方法
+
+3. `component`所使用的组件名称
+
+`[]`主要是作用域，用于`if`, `for`, `while`循环这些有自己作用域的组件，然后在里面调用`{}`就可以
+实现流程控制了
+
+boss直聘数据拉取栗子：
+
 ```json
 [
   {
+    "component": "request",
     "args": {
       "url": "https://www.zhipin.com/c101280100/?query=PHP"
     },
-    "type": "browser",
-    "component": "request"
+    "type": "browser"
   },
-  {
-    "args": {
-      "time": 5
+  [
+    {
+      "component": "for",
+      "args": {
+        "xpath": "//div[@class='job-list']//ul//li"
+      },
+      "type": "start"
     },
-    "component": "sleep"
-  }
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//div[@class='job-title']",
+        "is_text": true,
+        "key": "language"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//span[@class='red']",
+        "is_text": true,
+        "key": "salary_range"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-primary']/h3/following-sibling::p",
+        "is_text": true,
+        "key": "address_workAge_education"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-company']//a",
+        "is_text": true,
+        "key": "company"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-company']//p",
+        "is_text": true,
+        "key": "tmt"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "xpath": "./div[@class='job-primary']//div[@class='info-publis']/h3",
+        "is_text": true,
+        "key": "hr_name_position"
+      },
+      "type": "grab"
+    },
+    {
+      "component": "for",
+      "args": {
+        "key": "job_list_custom_array"
+      },
+      "type": "end"
+    }
+  ]
 ]
 ```
+
 
 
 ### 优势
