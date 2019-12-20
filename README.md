@@ -95,12 +95,14 @@ https://npm.taobao.org/mirrors/chromedriver
 
 boss直聘数据拉取栗子：
 
+![](./docs/gif/boss.gif)
+
 ```json
 [
   {
     "component": "request",
     "args": {
-      "url": "https://www.zhipin.com/c101280100/?query=PHP"
+      "url": "https://www.zhipin.com/c101280100/?query=PHP&page=9"
     },
     "type": "browser"
   },
@@ -108,7 +110,8 @@ boss直聘数据拉取栗子：
     {
       "component": "for",
       "args": {
-        "xpath": "//div[@class='job-list']//ul//li"
+        "xpath": "//div[@class='job-list']//ul//li",
+        "turn_on": false
       },
       "type": "start"
     },
@@ -172,11 +175,34 @@ boss直聘数据拉取栗子：
         "key": "job_list_custom_array"
       },
       "type": "end"
+    },
+    {
+      "component": "judge",
+      "args": {
+        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]",
+        "class": "disabled"
+      },
+      "type": "has_class_terminate"
+    },
+    {
+      "component": "sleep",
+      "type": "random"
+    },
+    {
+      "component": "javascript",
+      "args": {
+        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);document.getElementById('footer').scrollIntoView();"
+      }
+    },
+    {
+      "component": "click",
+      "args": {
+        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
+      }
     }
   ]
 ]
 ```
-
 
 
 ### 优势
@@ -190,3 +216,5 @@ boss直聘数据拉取栗子：
 
 `742398812`
 
+
+本项目仅供学习用途

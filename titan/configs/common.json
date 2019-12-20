@@ -2,7 +2,7 @@
   {
     "component": "request",
     "args": {
-      "url": "https://www.zhipin.com/c101280100/?query=PHP"
+      "url": "https://www.zhipin.com/c101280100/?query=PHP&page=9"
     },
     "type": "browser"
   },
@@ -79,9 +79,10 @@
     {
       "component": "judge",
       "args": {
-        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
+        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]",
+        "class": "disabled"
       },
-      "type": "can_click_loop"
+      "type": "has_class_terminate"
     },
     {
       "component": "sleep",
@@ -90,7 +91,7 @@
     {
       "component": "javascript",
       "args": {
-        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);"
+        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);document.getElementById('footer').scrollIntoView();"
       }
     },
     {
