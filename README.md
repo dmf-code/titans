@@ -95,6 +95,8 @@ https://npm.taobao.org/mirrors/chromedriver
 
 boss直聘数据拉取栗子：
 
+![](./docs/gif/boss.gif)
+
 ```json
 [
   {
@@ -190,3 +192,5 @@ boss直聘数据拉取栗子：
 
 `742398812`
 
+
+本项目仅供学习用途

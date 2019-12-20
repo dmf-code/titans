@@ -90,7 +90,7 @@
     {
       "component": "javascript",
       "args": {
-        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);"
+        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);document.getElementById('footer').scrollIntoView();"
       }
     },
     {
