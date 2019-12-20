@@ -13,11 +13,10 @@ class ForManager(metaclass=Singleton):
         self.depth = GlobalManager().depth
 
     def set_yield_for_stack(self, func):
-        if self.depth not in self.for_stack or self.for_stack[self.depth] is None:
-            self.for_stack[self.depth] = {
-                'yield': func,
-                'element': None
-            }
+        self.for_stack[self.depth] = {
+            'yield': func,
+            'element': None
+        }
 
     def set_element_for_stack(self, element):
         self.for_stack[self.depth]['element'] = element

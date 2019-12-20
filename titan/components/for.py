@@ -13,7 +13,8 @@ class For(Base):
     def __init__(self, params):
         super(For, self).__init__(params)
         ForManager().set_depth()
-        ForManager().set_yield_for_stack(self.loop_condition())
+        if GlobalManager().component_type == 'start':
+            ForManager().set_yield_for_stack(self.loop_condition())
 
     def loop_condition(self):
         elements = []
@@ -55,7 +56,8 @@ class For(Base):
             ForManager().for_loop_start()
         except Exception as e:
             print(traceback.format_exc())
-            GlobalManager().loop_turn_off()
+            if self.params.get('turn_on', True):
+                GlobalManager().loop_turn_off()
             ForManager().destroy_for_stack()
             print(e)
 

@@ -10,7 +10,8 @@
     {
       "component": "for",
       "args": {
-        "xpath": "//div[@class='job-list']//ul//li"
+        "xpath": "//div[@class='job-list']//ul//li",
+        "turn_on": false
       },
       "type": "start"
     },
@@ -74,6 +75,29 @@
         "key": "job_list_custom_array"
       },
       "type": "end"
+    },
+    {
+      "component": "judge",
+      "args": {
+        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
+      },
+      "type": "can_click_loop"
+    },
+    {
+      "component": "sleep",
+      "type": "random"
+    },
+    {
+      "component": "javascript",
+      "args": {
+        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);"
+      }
+    },
+    {
+      "component": "click",
+      "args": {
+        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
+      }
     }
   ]
 ]

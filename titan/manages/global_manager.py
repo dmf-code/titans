@@ -16,6 +16,8 @@ class GlobalManager(metaclass=Singleton):
         self.is_break = False
         self.is_loop = True
         self.driver = None
+        self.component_name = None
+        self.component_type = None
 
     def set_driver(self, driver):
         if self.driver is None:

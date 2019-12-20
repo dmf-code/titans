@@ -48,6 +48,7 @@ class Engine(object):
             print('exec command: ', command)
             component_name = command['component'].lower()
             component_args = command.get('args', {})
+            component_type = command.get('type', 'default')
 
             print('before_if_status: ', GlobalManager().is_if)
             print('before_break_status: ', GlobalManager().is_break)
@@ -56,11 +57,12 @@ class Engine(object):
             if command.get('db_args', None):
                 component_args['db_args'] = GlobalManager().get(component_args['dbArgs'], '_db_args')
 
+            GlobalManager().component_name = component_name
+            GlobalManager().component_type = component_type
+
             component = ContainerManager().build(component_name, component_args)
 
-            type_ = command.get('type', 'default')
-
-            result = self.result_filter(component_args, component.run(type_))
+            result = self.result_filter(component_args, component.run(component_type))
 
             if command.get('return', None):
                 GlobalManager().set(command['return'], result)
