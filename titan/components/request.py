@@ -10,7 +10,8 @@ class Request(Base):
     def url_format(self):
         if self.params.get('url', None):
             global_type = self.params.get('global_type', None)
-            print('global_type：', global_type)
+            if GlobalManager().debug:
+                print('global_type：', global_type)
             if global_type is None:
                 params = GlobalManager().get()
             else:

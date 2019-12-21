@@ -9,6 +9,29 @@ Selenium automation framework - Selenium自动化框架
 
 ![](./docs/imgs/front.png)
 
+#### 生成生产环境
+```markdown
+npm run build
+```
+
+#### `nginx` 配置
+```markdown
+server {
+        listen       80;
+        server_name  www.titans.com ;
+        root   "F:/Python/titans/admin/frontend/dist";
+        location /$ {
+            index  index.html index.htm;
+            try_files $uri $uri/;
+        }
+}
+```
+
+配置好后，就能够使用前端页面了
+
+> 注意这里面要将frontend->config->index.js->build下的assetsPublicPath: '/' 改为assetsPublicPath: './' 才能找到静态文件
+的路径
+
 ### 后端
 
 `flask` 框架进行编写，数据表结构如下
@@ -31,6 +54,32 @@ CREATE TABLE `tasks` (
   `name` varchar(32) DEFAULT NULL COMMENT '任务名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
+#### `nginx` 反向代理配置
+
+```markdown
+server {
+        listen       80;
+        server_name  www.titans.com ;
+        root   "F:/Python/titans/admin/frontend/dist";
+        location /$ {
+			index  index.html index.htm;
+            try_files $uri $uri/;
+        }
+		location /api/configs/ {
+			proxy_set_header Host $host;
+			proxy_set_header X-Forwarded-For $remote_addr; 
+            proxy_pass   http://127.0.0.1:5000/configs/;
+        }
+}
+```
+
+#### 执行命令
+
+进入到 `titans` -> `admin` 目录下，执行以下命令启动 `web` 服务
+```shell
+python app.py
 ```
 
 ### 服务端
@@ -59,19 +108,20 @@ CREATE TABLE `tasks` (
 
 组件
 ```markdown
-│  click.py     点击操作类
-│  content.py   html标签内容获取类
-│  cookie.py    cookie操作类
-│  for.py       for循环流程类
-│  if.py        if流程类
-│  iframe.py    iframe操作类
-│  input.py     输入操作类
-│  judge.py     条件判断类
-│  request.py   请求类
-│  sleep.py     睡眠延时类
-│  wait.py      等待事件类
-│  while.py     while循环类
-│  window.py    window标签页切换类
+│  click.py                 点击操作类                    
+│  content.py               html标签内容获取类                    
+│  cookie.py                cookie操作类                        
+│  for.py                   for循环流程类                    
+│  if.py                    if流程类                    
+│  iframe.py                iframe操作类            
+│  input.py                 输入操作类                    
+│  javascript.py            javascript代码执行类                  
+│  judge.py                 条件判断类                      
+│  request.py               请求类                          
+│  sleep.py                 睡眠延时类                        
+│  wait.py                  等待事件类                       
+│  while.py                 while循环类        
+│  window.py                window标签页切换类                         
 ```
 
 

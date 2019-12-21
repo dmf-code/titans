@@ -16,12 +16,14 @@ class Engine(object):
         self.hook = HookManager().build(spider_type)
         self.args = self.hook.get_args()
         self.commands = self.hook.load_commands()
-        print(self.hook)
+        if GlobalManager().debug:
+            print(self.hook)
 
     def scheduler(self):
         self.hook.before()
         try:
-            print(self.commands)
+            if GlobalManager().debug:
+                print(self.commands)
             self.execute(self.commands, 0)
             self.handle_data()
         except Exception as e:
@@ -44,15 +46,17 @@ class Engine(object):
 
                 GlobalManager().depth = depth
                 continue
-            print('#--------------------------------------#')
-            print('exec command: ', command)
+
             component_name = command['component'].lower()
             component_args = command.get('args', {})
             component_type = command.get('type', 'default')
 
-            print('before_if_status: ', GlobalManager().is_if)
-            print('before_break_status: ', GlobalManager().is_break)
-            print('before_loop_status: ', GlobalManager().is_loop)
+            if GlobalManager().debug:
+                print('#--------------------------------------#')
+                print('exec command: ', command)
+                print('before_if_status: ', GlobalManager().is_if)
+                print('before_break_status: ', GlobalManager().is_break)
+                print('before_loop_status: ', GlobalManager().is_loop)
 
             if command.get('db_args', None):
                 component_args['db_args'] = GlobalManager().get(component_args['dbArgs'], '_db_args')
@@ -66,10 +70,10 @@ class Engine(object):
 
             if command.get('return', None):
                 GlobalManager().set(command['return'], result)
-
-            print('after_if_status: ', GlobalManager().is_if)
-            print('after_break_status: ', GlobalManager().is_break)
-            print('after_loop_status: ', GlobalManager().is_loop)
+            if GlobalManager().debug:
+                print('after_if_status: ', GlobalManager().is_if)
+                print('after_break_status: ', GlobalManager().is_break)
+                print('after_loop_status: ', GlobalManager().is_loop)
 
             if component_name == 'if' and not GlobalManager().is_if:
                 return
@@ -94,11 +98,8 @@ class Engine(object):
                 'result': data
             }
             res = make_requests('POST', callback['request']['url'], json=task_json)
-            print(res)
-            if res['code'] == 0:
-                print('success')
-            else:
-                print('failed')
+            if GlobalManager().debug:
+                print(res)
 
     @staticmethod
     def result_filter(component_args, text):

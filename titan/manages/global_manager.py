@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from titan.abstracts.singleton import Singleton
+from titan import YAML_CONFIG
 import re
 
 
@@ -18,6 +19,7 @@ class GlobalManager(metaclass=Singleton):
         self.driver = None
         self.component_name = None
         self.component_type = None
+        self.debug = YAML_CONFIG['debug']
 
     def set_driver(self, driver):
         if self.driver is None:

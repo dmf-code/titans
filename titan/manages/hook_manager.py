@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from titan.abstracts.singleton import Singleton
 from titan.utils import convert_big_hump
+from titan.manages.global_manager import GlobalManager
 from titan import dirs
 import importlib
 import os
@@ -12,7 +13,8 @@ class HookManager(metaclass=Singleton):
     def __init__(self):
         self.file_name = None
         self.hooks_name = os.listdir(dirs['hooks'])
-        print('use hook: ', self.hooks_name)
+        if GlobalManager().debug:
+            print('use hook: ', self.hooks_name)
 
     def build(self, spider_type):
         self.file_name = spider_type
@@ -21,7 +23,8 @@ class HookManager(metaclass=Singleton):
 
         if self.__hook is None:
             load_module = importlib.import_module('titan.hooks.{}'.format(self.file_name))
-            print(load_module)
+            if GlobalManager().debug:
+                print(load_module)
             self.__hook = getattr(load_module, convert_big_hump(self.file_name))
 
         return self.__hook()

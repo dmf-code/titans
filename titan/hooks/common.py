@@ -26,7 +26,7 @@ class Common(Base):
 
     def exception(self, *args, **kwargs):
         msg = 'exception: {} {}'.format(GlobalManager().get('commands.uuid'), traceback.format_exc())
-        if YAML_CONFIG['debug']:
+        if GlobalManager().debug:
             print(msg)
         else:
             logger.error(msg)
