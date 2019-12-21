@@ -9,13 +9,15 @@ import re
 
 
 class Engine(object):
-    def __init__(self, spider_type, task_name, uuid):
+    def __init__(self, spider_type, task_name, uuid, debug):
         driver = Chrome().build()
         GlobalManager().build(spider_type, task_name, uuid)
         GlobalManager().set_driver(driver)
         self.hook = HookManager().build(spider_type)
         self.args = self.hook.get_args()
         self.commands = self.hook.load_commands()
+        if debug:
+            GlobalManager().debug = debug
         if GlobalManager().debug:
             print(self.hook)
 
