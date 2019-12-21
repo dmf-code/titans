@@ -17,7 +17,7 @@ class Entry(object):
     def build_parser(self):
         self.parser.add_argument('--type', dest='spider_type', required=True, help='spider type')
         self.parser.add_argument('--name', dest='task_name', required=True, help='task name')
-        self.parser.add_argument('--debug', dest='debug signal', help='debug signal', default=False)
+        self.parser.add_argument('--debug', dest='debug', required=False, help='debug signal', default=False)
         return self.parser.parse_args()
 
     def set(self, key, value):
@@ -26,7 +26,7 @@ class Entry(object):
 
     def run(self):
         try:
-            Engine(self.args.spider_type, self.args.task_name, self.uuid, self.debug).scheduler()
+            Engine(self.args.spider_type, self.args.task_name, self.uuid, self.args.debug).scheduler()
         except Exception as e:
             print(e)
             driver = GlobalManager().get_driver()
