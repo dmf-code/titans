@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from titan.manages.global_manager import GlobalManager
 from fake_useragent import UserAgent
 from selenium import webdriver
 from titan import dirs, YAML_CONFIG
@@ -18,7 +19,7 @@ class Chrome(object):
         )
         params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
         command_result = driver.execute("send_command", params)
-        if YAML_CONFIG['debug']:
+        if GlobalManager().debug:
             print(command_result)
 
     def set_chrome(self):
@@ -48,13 +49,12 @@ class Chrome(object):
                 chrome_options.add_experimental_option(k, v)
 
         d = DesiredCapabilities.CHROME
-        print(chrome_options)
-        print(YAML_CONFIG['debug'])
-        if YAML_CONFIG['debug']:
+        if GlobalManager().debug:
+            print(chrome_options)
             chromedriver_path = dirs['bin'] + 'chromedriver.exe'
             chrome = webdriver.Chrome(chromedriver_path, chrome_options=chrome_options, desired_capabilities=d)
         else:
-            hub = YAML_CONFIG['hub'][random.randint(0, len(YAML_CONFIG['hub'])-1)]
+            hub = YAML_CONFIG['hub'][random.randint(0, len(YAML_CONFIG['hub']) - 1)]
             chrome = webdriver.Remote(command_executor=hub, desired_capabilities=d)
 
         return chrome

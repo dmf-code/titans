@@ -34,7 +34,6 @@ def make_requests(method, url, **kwargs):
 def screening_value(element, params, text=''):
     if params.get('is_text', None):
         text = element.text
-        print(element.text)
 
     if params.get('attr', None):
         text = element.get_attribute(params['attr'])

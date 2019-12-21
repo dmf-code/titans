@@ -20,7 +20,6 @@ class ForManager(metaclass=Singleton):
 
     def set_element_for_stack(self, element):
         self.for_stack[self.depth]['element'] = element
-        # print(self.for_stack[self.depth]['element'].text)
 
     def get_element_for_stack(self):
         return self.for_stack[self.depth]['element']
@@ -29,6 +28,7 @@ class ForManager(metaclass=Singleton):
         self.for_stack[self.depth] = None
 
     def for_loop_start(self):
-        print(self.for_stack)
+        if GlobalManager().debug:
+            print(self.for_stack)
         element = next(self.for_stack[self.depth]['yield'])
         self.set_element_for_stack(element)

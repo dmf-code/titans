@@ -44,10 +44,12 @@ class For(Base):
 
         if self.params.get('xpath', None):
             element = element.find_element_by_xpath(self.params['xpath'])
-            print(element.text)
 
         if self.params.get('tag_name', None):
             element = element.find_element_by_tag_name(self.params['tag_name'])
+
+        if GlobalManager().debug:
+            print(element.text)
 
         self.__stack[self.params['key']] = screening_value(element, self.params)
 
@@ -55,16 +57,17 @@ class For(Base):
         try:
             ForManager().for_loop_start()
         except Exception as e:
-            print(traceback.format_exc())
+            if GlobalManager().debug:
+                print(traceback.format_exc())
+                print(e)
             if self.params.get('turn_on', True):
                 GlobalManager().loop_turn_off()
             ForManager().destroy_for_stack()
-            print(e)
 
     def end(self):
-        print(self.__stack)
+        if GlobalManager().debug:
+            print(self.__stack)
         if self.params.get('key', None):
             GlobalManager().set(self.params['key'], copy.deepcopy(self.__stack))
-        # print(GlobalManager().get('job_list_custom_array'))
         ForManager().set_depth()
         GlobalManager().loop_turn_on()

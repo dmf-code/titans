@@ -17,7 +17,8 @@ class Base(object):
 
     @run_time_sum
     def run(self, func_name):
-        print('func_name: ', func_name)
+        if GlobalManager().debug:
+            print('func_name: ', func_name)
         if hasattr(self, func_name) and (self.allow or func_name in self.allow):
             result = getattr(self, func_name)()
             if self.params.get('sleep_time', None):
