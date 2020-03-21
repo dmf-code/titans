@@ -18,10 +18,10 @@ development:
     excludeSwitches: ['enable-automation']
   }
   callback: {
-    default: 'request',
+    default: 'file',
     stores: {
       file: {
-        name: 'test.txt'
+        name: 'boss.txt'
       },
       request: {
         url: 'http://127.0.0.1:5000/tasks/'

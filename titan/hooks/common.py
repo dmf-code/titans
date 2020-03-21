@@ -18,6 +18,7 @@ class Common(Base):
         pass
 
     def handle_data(self, *args, **kwargs):
+        print(args)
         pass
 
     def after(self, *args, **kwargs):
@@ -25,6 +26,7 @@ class Common(Base):
         GlobalManager().get_driver().quit()
 
     def exception(self, *args, **kwargs):
+
         msg = 'exception: {} {}'.format(GlobalManager().get('commands.uuid'), traceback.format_exc())
         if GlobalManager().debug:
             print(msg)

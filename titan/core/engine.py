@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from titan.manages.container_manager import ContainerManager
+from titan.manages.component_manager import ComponentManager
 from titan.manages.global_manager import GlobalManager
 from titan.manages.hook_manager import HookManager
 from titan.core.browser import Chrome
 from titan.utils import make_requests
 from titan import YAML_CONFIG, dirs
+from titan.utils.printer import Printer
 import re
 
 
@@ -54,11 +55,12 @@ class Engine(object):
             component_type = command.get('type', 'default')
 
             if GlobalManager().debug:
-                print('#--------------------------------------#')
-                print('exec command: ', command)
-                print('before_if_status: ', GlobalManager().is_if)
-                print('before_break_status: ', GlobalManager().is_break)
-                print('before_loop_status: ', GlobalManager().is_loop)
+                Printer().init()
+                Printer().add_row(['exec command', command])
+                Printer().add_row(['before_if_status', GlobalManager().is_if])
+                Printer().add_row(['before_break_status', GlobalManager().is_break])
+                Printer().add_row(['before_loop_status', GlobalManager().is_loop])
+                Printer().output()
 
             if command.get('db_args', None):
                 component_args['db_args'] = GlobalManager().get(component_args['dbArgs'], '_db_args')
@@ -66,16 +68,18 @@ class Engine(object):
             GlobalManager().component_name = component_name
             GlobalManager().component_type = component_type
 
-            component = ContainerManager().build(component_name, component_args)
+            component = ComponentManager().build(component_name, component_args)
 
             result = self.result_filter(component_args, component.run(component_type))
 
             if command.get('return', None):
                 GlobalManager().set(command['return'], result)
             if GlobalManager().debug:
-                print('after_if_status: ', GlobalManager().is_if)
-                print('after_break_status: ', GlobalManager().is_break)
-                print('after_loop_status: ', GlobalManager().is_loop)
+                Printer().init()
+                Printer().add_row(['after_if_status ', GlobalManager().is_if])
+                Printer().add_row(['after_break_status ', GlobalManager().is_break])
+                Printer().add_row(['after_loop_status ', GlobalManager().is_loop])
+                Printer().output()
 
             if component_name == 'if' and not GlobalManager().is_if:
                 return
