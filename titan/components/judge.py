@@ -25,5 +25,12 @@ class Judge(Base):
             return GlobalManager().loop_turn_off()
         return GlobalManager().loop_turn_on()
 
+    def not_has_element_terminate(self):
+        element = self.driver.find_elements_by_xpath(self.params['xpath'])
+        if not element:
+            return GlobalManager().loop_turn_off()
+
+        return GlobalManager().loop_turn_on()
+
     def default(self):
         pass

@@ -49,7 +49,7 @@ class Chrome(object):
                 chrome_options.add_experimental_option(k, v)
 
         d = DesiredCapabilities.CHROME
-        if GlobalManager().debug:
+        if YAML_CONFIG.get("hub", None) is None:
             print(chrome_options)
             chromedriver_path = dirs['bin'] + 'chromedriver.exe'
             chrome = webdriver.Chrome(chromedriver_path, chrome_options=chrome_options, desired_capabilities=d)
