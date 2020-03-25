@@ -18,6 +18,11 @@ class ForManager(metaclass=Singleton):
             'element': None
         }
 
+    def get_yield_for_stack(self):
+        if self.for_stack.get(self.depth, None) is None or self.for_stack[self.depth] is None:
+            return None
+        return True
+
     def set_element_for_stack(self, element):
         self.for_stack[self.depth]['element'] = element
 

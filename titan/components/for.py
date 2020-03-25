@@ -13,7 +13,7 @@ class For(Base):
     def __init__(self, params):
         super(For, self).__init__(params)
         ForManager().set_depth()
-        if GlobalManager().component_type == 'start':
+        if GlobalManager().component_type == 'start' and ForManager().get_yield_for_stack() is None:
             ForManager().set_yield_for_stack(self.loop_condition())
 
     def loop_condition(self):
@@ -60,6 +60,7 @@ class For(Base):
             if GlobalManager().debug:
                 print(traceback.format_exc())
                 print(e)
+
             if self.params.get('turn_on', True):
                 GlobalManager().loop_turn_off()
             ForManager().destroy_for_stack()
