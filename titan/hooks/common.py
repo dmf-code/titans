@@ -6,6 +6,7 @@ from titan import YAML_CONFIG
 import traceback
 from titan.utils import make_requests
 import json
+import os
 from titan import dirs
 
 
@@ -19,6 +20,9 @@ class Common(Base):
 
     def handle_data(self, *args, **kwargs):
         print(args)
+        for arg in args:
+            with open(dirs["storages"] + 'result' + os.path.sep + 'result.csv', "a") as f:
+                f.write(arg)
         pass
 
     def after(self, *args, **kwargs):

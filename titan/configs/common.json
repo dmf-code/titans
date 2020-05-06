@@ -1,104 +1,32 @@
 [
   {
+    "component": "customizes.test"
+  },
+  {
     "component": "request",
     "args": {
-      "url": "https://www.zhipin.com/c101280100/?query=PHP&page=9"
+      "url": "https://www.baidu.com"
     },
     "type": "browser"
   },
-  [
-    {
-      "component": "for",
-      "args": {
-        "xpath": "//div[@class='job-list']//ul//li",
-        "turn_on": false
-      },
-      "type": "start"
+  {
+    "component": "input",
+    "args": {
+      "xpath": "//input[@id='kw']",
+      "text": "Python"
     },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//div[@class='job-title']",
-        "is_text": true,
-        "key": "language"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//span[@class='red']",
-        "is_text": true,
-        "key": "salary_range"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']/h3/following-sibling::p",
-        "is_text": true,
-        "key": "address_workAge_education"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-company']//a",
-        "is_text": true,
-        "key": "company"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-company']//p",
-        "is_text": true,
-        "key": "tmt"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-publis']/h3",
-        "is_text": true,
-        "key": "hr_name_position"
-      },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "key": "job_list_custom_array"
-      },
-      "type": "end"
-    },
-    {
-      "component": "judge",
-      "args": {
-        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]",
-        "class": "disabled"
-      },
-      "type": "has_class_terminate"
-    },
-    {
-      "component": "sleep",
-      "type": "random"
-    },
-    {
-      "component": "javascript",
-      "args": {
-        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);document.getElementById('footer').scrollIntoView();"
-      }
-    },
-    {
-      "component": "click",
-      "args": {
-        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
-      }
+    "type": "text"
+  },
+  {
+    "component": "click",
+    "args": {
+      "xpath": "//input[@id='su']"
     }
-  ]
+  },
+  {
+    "component": "sleep",
+    "args": {
+      "time": 5
+    }
+  }
 ]

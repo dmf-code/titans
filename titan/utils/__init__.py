@@ -42,3 +42,4 @@ def screening_value(element, params, text=''):
         text = re.match(params['pattern'], text).group(1)
 
     return text
+
