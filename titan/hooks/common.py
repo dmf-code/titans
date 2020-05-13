@@ -22,7 +22,7 @@ class Common(Base):
         print(args)
         for arg in args:
             with open(dirs["storages"] + 'result' + os.path.sep + 'result.csv', "a") as f:
-                f.write(arg)
+                f.write(json.dumps(arg))
         pass
 
     def after(self, *args, **kwargs):
