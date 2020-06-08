@@ -6,6 +6,7 @@ from titan import YAML_CONFIG
 import traceback
 from titan.utils import make_requests
 import json
+import os
 from titan import dirs
 
 
@@ -18,8 +19,17 @@ class Common(Base):
         pass
 
     def handle_data(self, *args, **kwargs):
-        print(args)
-        pass
+        res = kwargs['data']
+        with open(dirs['storages'] + os.path.sep + 'result.csv', 'a+') as f:
+            for item in res['video_custom_array']:
+                txt = '{},{},{},{},{}'.format(
+                    item['url'],
+                    item['img'],
+                    item['clarity'],
+                    item['time'],
+                    item['views']
+                )
+                f.write(txt + os.linesep)
 
     def after(self, *args, **kwargs):
         GlobalManager().get_driver().close()

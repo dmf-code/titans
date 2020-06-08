@@ -2,102 +2,99 @@
   {
     "component": "request",
     "args": {
-      "url": "https://www.zhipin.com/c101280100/?query=PHP&page=9"
+      "url": "https://javfinder.la/category/censored.html"
     },
     "type": "browser"
   },
   [
     {
-      "component": "for",
-      "args": {
-        "xpath": "//div[@class='job-list']//ul//li",
-        "turn_on": false
-      },
+      "component": "while",
       "type": "start"
     },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//div[@class='job-title']",
-        "is_text": true,
-        "key": "language"
+    [
+      {
+        "component": "for",
+        "args": {
+          "xpath": "//div[contains(@class, 'main-item')]/div"
+        },
+        "type": "start"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']//span[@class='red']",
-        "is_text": true,
-        "key": "salary_range"
+      {
+        "component": "for",
+        "args": {
+          "xpath": "./a",
+          "attr": "href",
+          "key": "url"
+        },
+        "type": "grab"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-primary']/h3/following-sibling::p",
-        "is_text": true,
-        "key": "address_workAge_education"
+      {
+        "component": "for",
+        "args": {
+          "xpath": "./a/img",
+          "attr": "src",
+          "key": "img"
+        },
+        "type": "grab"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-company']//a",
-        "is_text": true,
-        "key": "company"
+      {
+        "component": "for",
+        "args": {
+          "xpath": "./a/span[@class='bagde']",
+          "is_text": true,
+          "key": "clarity"
+        },
+        "type": "grab"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-company']//p",
-        "is_text": true,
-        "key": "tmt"
+      {
+        "component": "for",
+        "args": {
+          "xpath": "./a/span[@class='time-video']",
+          "is_text": true,
+          "key": "time"
+        },
+        "type": "grab"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "xpath": "./div[@class='job-primary']//div[@class='info-publis']/h3",
-        "is_text": true,
-        "key": "hr_name_position"
+      {
+        "component": "for",
+        "args": {
+          "xpath": "./a/span[@class='views']",
+          "is_text": true,
+          "key": "views"
+        },
+        "type": "grab"
       },
-      "type": "grab"
-    },
-    {
-      "component": "for",
-      "args": {
-        "key": "job_list_custom_array"
-      },
-      "type": "end"
-    },
+      {
+        "component": "for",
+        "args": {
+          "key": "video_custom_array"
+        },
+        "type": "end"
+      }
+    ],
     {
       "component": "judge",
       "args": {
-        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]",
-        "class": "disabled"
+        "xpath": "//i[contains(@class, 'fa-angle-double-right')]"
       },
-      "type": "has_class_terminate"
-    },
-    {
-      "component": "sleep",
-      "type": "random"
+      "type": "not_has_element_terminate"
     },
     {
       "component": "javascript",
       "args": {
-        "code": "$('div.job-list > div.page > a.next').css('z-index', 100000000);document.getElementById('footer').scrollIntoView();"
+        "code": "$('.pagination').css('z-index', 10000000);"
+      }
+    },
+    {
+      "component": "sleep",
+      "args": {
+        "time": 30
       }
     },
     {
       "component": "click",
       "args": {
-        "xpath": "//div[@class='job-list']//div[@class='page']//a[last()]"
+        "xpath": "//li[@class='active']/following-sibling::*[1]/a"
       }
     }
   ]
