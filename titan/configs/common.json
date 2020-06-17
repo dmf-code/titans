@@ -1,7 +1,11 @@
 [
   {
+    "component": "customizes.test"
+  },
+  {
     "component": "request",
     "args": {
+<<<<<<< HEAD
       "url": "https://javfinder.la/category/censored.html"
     },
     "type": "browser"
@@ -96,6 +100,30 @@
       "args": {
         "xpath": "//li[@class='active']/following-sibling::*[1]/a"
       }
+=======
+      "url": "https://www.baidu.com"
+    },
+    "type": "browser"
+  },
+  {
+    "component": "input",
+    "args": {
+      "xpath": "//input[@id='kw']",
+      "text": "Python"
+    },
+    "type": "text"
+  },
+  {
+    "component": "click",
+    "args": {
+      "xpath": "//input[@id='su']"
     }
-  ]
+  },
+  {
+    "component": "sleep",
+    "args": {
+      "time": 5
+>>>>>>> 85d7bc038333cde3c68071df2ce46f43d37790b5
+    }
+  }
 ]
