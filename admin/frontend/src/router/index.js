@@ -1,13 +1,19 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Table from '@/components/Table'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-  routes: [{
-    path: '/',
-    name: 'Table',
-    component: Table
-  }]
+const routes = [{
+  path: '/',
+  name: 'Table',
+  component: Table
+}]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router

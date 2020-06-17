@@ -98,6 +98,7 @@ export default {
       location.reload();
     },
     onChange(newJson) {
+      console.log(newJson);
       this.form.jsonText = newJson;
     }
   }
@@ -125,10 +126,6 @@ export default {
 
 .el-row {
   margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .el-col {

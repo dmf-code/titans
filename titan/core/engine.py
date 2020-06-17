@@ -95,7 +95,7 @@ class Engine(object):
         storage_type = YAML_CONFIG['callback']['default']
         callback = YAML_CONFIG['callback']['stores']
         if storage_type == 'file':
-            self.hook.handle_data(data)
+            self.hook.handle_data(data=data)
         elif storage_type == 'request':
             task_json = {
                 'type': GlobalManager().get('spider_type', '_system'),
