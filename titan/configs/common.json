@@ -5,102 +5,6 @@
   {
     "component": "request",
     "args": {
-<<<<<<< HEAD
-      "url": "https://javfinder.la/category/censored.html"
-    },
-    "type": "browser"
-  },
-  [
-    {
-      "component": "while",
-      "type": "start"
-    },
-    [
-      {
-        "component": "for",
-        "args": {
-          "xpath": "//div[contains(@class, 'main-item')]/div"
-        },
-        "type": "start"
-      },
-      {
-        "component": "for",
-        "args": {
-          "xpath": "./a",
-          "attr": "href",
-          "key": "url"
-        },
-        "type": "grab"
-      },
-      {
-        "component": "for",
-        "args": {
-          "xpath": "./a/img",
-          "attr": "src",
-          "key": "img"
-        },
-        "type": "grab"
-      },
-      {
-        "component": "for",
-        "args": {
-          "xpath": "./a/span[@class='bagde']",
-          "is_text": true,
-          "key": "clarity"
-        },
-        "type": "grab"
-      },
-      {
-        "component": "for",
-        "args": {
-          "xpath": "./a/span[@class='time-video']",
-          "is_text": true,
-          "key": "time"
-        },
-        "type": "grab"
-      },
-      {
-        "component": "for",
-        "args": {
-          "xpath": "./a/span[@class='views']",
-          "is_text": true,
-          "key": "views"
-        },
-        "type": "grab"
-      },
-      {
-        "component": "for",
-        "args": {
-          "key": "video_custom_array"
-        },
-        "type": "end"
-      }
-    ],
-    {
-      "component": "judge",
-      "args": {
-        "xpath": "//i[contains(@class, 'fa-angle-double-right')]"
-      },
-      "type": "not_has_element_terminate"
-    },
-    {
-      "component": "javascript",
-      "args": {
-        "code": "$('.pagination').css('z-index', 10000000);"
-      }
-    },
-    {
-      "component": "sleep",
-      "args": {
-        "time": 30
-      }
-    },
-    {
-      "component": "click",
-      "args": {
-        "xpath": "//li[@class='active']/following-sibling::*[1]/a"
-      }
-=======
       "url": "https://www.baidu.com"
     },
     "type": "browser"
@@ -123,7 +27,6 @@
     "component": "sleep",
     "args": {
       "time": 5
->>>>>>> 85d7bc038333cde3c68071df2ce46f43d37790b5
     }
   }
 ]

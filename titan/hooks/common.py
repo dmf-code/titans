@@ -19,7 +19,6 @@ class Common(Base):
         pass
 
     def handle_data(self, *args, **kwargs):
-<<<<<<< HEAD
         res = kwargs['data']
         with open(dirs['storages'] + os.path.sep + 'result.csv', 'a+') as f:
             for item in res['video_custom_array']:
@@ -31,13 +30,6 @@ class Common(Base):
                     item['views']
                 )
                 f.write(txt + os.linesep)
-=======
-        print(args)
-        for arg in args:
-            with open(dirs["storages"] + 'result' + os.path.sep + 'result.csv', "a") as f:
-                f.write(json.dumps(arg))
-        pass
->>>>>>> 85d7bc038333cde3c68071df2ce46f43d37790b5
 
     def after(self, *args, **kwargs):
         GlobalManager().get_driver().close()
