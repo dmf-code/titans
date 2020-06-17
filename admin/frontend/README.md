@@ -2,7 +2,6 @@
 
 ## Project setup
 ```
-npm i element-ui -S
 npm install brace
 npm install jsoneditor
 ```
