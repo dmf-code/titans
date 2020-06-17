@@ -7,6 +7,8 @@ Selenium automation framework - Selenium自动化框架
 
 采用Element-UI进行前端布局设计，前后分离的模式
 
+更新新版 `vue` 2.6.11 版本，之前旧版要使用 `build` 目录，导致旧版有问题
+
 ![](./docs/imgs/front.png)
 
 #### 生成生产环境
